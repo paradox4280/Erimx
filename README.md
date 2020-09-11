@@ -6,7 +6,7 @@ Discord bot coded in python
 
 # Run
 ```
-Pipenv run dev
+pipenv run dev
 ```
 
 # Usage example
