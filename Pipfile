@@ -1,0 +1,22 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+discord = "*"
+requests = "*"
+asyncio = "*"
+praw = "*"
+aiohttp = "*"
+bs4 = "*"
+colorama = "*"
+DateTime = "*"
+
+[requires]
+python_version = "3.8"
+
+[scripts]
+dev = "nodemon --exec python ./src/bot.py"
