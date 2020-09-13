@@ -45,20 +45,10 @@ class ErrorHandler(commands.Cog):
 
     @commands.command(name='repeat', aliases=['mimic', 'copy'])
     async def do_repeat(self, ctx, *, inp: str):
-        """A simple command which repeats your input!
-        Parameters
-        ------------
-        inp: str
-            The input you wish to repeat.
-        """
         await ctx.send(inp)
 
     @do_repeat.error
     async def do_repeat_handler(self, ctx, error):
-        """A local Error Handler for our command do_repeat.
-        This will only listen for errors in do_repeat.
-        The global on_command_error will still be invoked after.
-        """
 
         if isinstance(error, commands.MissingRequiredArgument):
             if error.param.name == 'inp':
