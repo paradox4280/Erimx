@@ -13,7 +13,7 @@ def allowed(ctx):
 async def kick(self, ctx, member: discord.Member=None):
     await ctx.message.delete()
     if not member:
-        await ctx.send("Please commandsecify a member")
+        await ctx.send("Please specify a member")
         return
     await member.kick()
     await ctx.send(f"{member.mention} got kicked")
@@ -22,7 +22,7 @@ async def kick(self, ctx, member: discord.Member=None):
 async def ban(self, ctx, member: discord.Member=None):
     await ctx.message.delete()
     if not member:
-        await ctx.send("Please commandsecify a member")
+        await ctx.send("Please specify a member")
         return
     await member.ban()
     await ctx.send(f"{member.mention} got banned")
@@ -32,7 +32,7 @@ async def mute(self, ctx, member: discord.Member=None):
     await ctx.message.delete()
     role = discord.utils.get(ctx.guild.roles, name="Muted")
     if not member:
-        await ctx.send("Please commandsecify a member")
+        await ctx.send("Please specify a member")
         return
     await member.add_roles(role)
     await ctx.send(f"{member.mention} got muted")
@@ -42,7 +42,7 @@ async def unmute(self, ctx, member: discord.Member=None):
     await ctx.message.delete()
     role = discord.utils.get(ctx.guild.roles, name="Muted")
     if not member:
-        await ctx.send("Please commandsecify a member")
+        await ctx.send("Please specify a member")
         return
     await member.remove_roles(role)
     await ctx.send(f"{member.mention} got unmuted")
