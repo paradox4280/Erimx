@@ -15,6 +15,9 @@ from discord.utils import get
 from discord import User
 from os import system
 
+with open('config.json') as f:
+    config = json.load(f)
+
 def get_prefix(paradox, message):
     with open('prefixes.json', 'r') as f:
         prefixes = json.load(f)
