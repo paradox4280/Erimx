@@ -15,7 +15,11 @@ from discord.utils import get
 from discord import User
 from os import system
 
-paradox = commands.Bot(command_prefix=os.getenv('PREFIX'))
+def get_prefix(paradox, message):
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+
+paradox = commands.Bot(command_prefix = get_prefix, case_Insensitive = True)
 [paradox.load_extension(f"cogs.{cog[:-3]}") for cog in os.listdir("cogs") if cog.endswith(".py")]
 
 @paradox.event
@@ -25,4 +29,43 @@ async def on_ready():
     print(f'\n{Fore.GREEN}[>]{Fore.RESET} {Fore.CYAN}User ID:{Fore.RESET} {Fore.YELLOW}{paradox.user.id}\n')
     print(f'\n{Fore.GREEN}[>]{Fore.RESET} {Fore.CYAN}Version:{Fore.RESET} {Fore.YELLOW}{discord.__version__}\n')
 
+@paradox.event
+async def on_command_error(ctx, error):
+  embed = discord.Embed(description=f'Error. Try =help ({error})', color = 16202876)
+  await ctx.send(embed = embed)
+    
+@paradox.event
+async def on_guild_join(guild):
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+
+    prefixes[str(guild.id)] = '='
+
+    with open('prefixes.json', 'w') as f:
+        json.dump(prefixes, f, indent=4)
+
+@paradox.event
+async def on_guild_remove(guild):
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+
+    prefixes.pop(str(guild.id))
+
+    with open('prefixes.json', 'w') as f:
+        json.dump(prefixes, f, indent=4)
+
+
+@paradox.command()
+async def changeprefix(ctx, prefix):
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+
+    prefixes[str(ctx.guild.id)] = prefix
+    
+    with open('prefixes.json', 'w') as f:
+        json.dump(prefixes, f, indent=4)
+    
+    embed = discord.Embed(description = f'prefix changed to: {prefix}', color = 16202876)
+    await ctx.send(embed = embed)
+    
 paradox.run(os.getenv('BOT_TOKEN'))
