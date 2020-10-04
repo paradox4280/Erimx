@@ -24,3 +24,5 @@ Music
 - Meme
 - 8Ball
 - Play
+- Hangman
+
