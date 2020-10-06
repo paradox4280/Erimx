@@ -9,27 +9,26 @@ class FunCog(commands.Cog):
 async def on_ready(self):
     print("Commands Cog has been loaded\n-------")
 
-reddit = praw.Reddit(client_id="D6gixR5uuwEySQ",
-                     client_secret="2CZQlAwFlryos8J6U2hSovqI6xs",
-                     redirect_uri="http://localhost:8080",
-                     user_agent="testscript by /u/x2Fi")
+ @commands.command(name='wyr', aliases=['wouldyourather', 'would-you-rather'])
+    async def _wyr(self, ctx):
+      r = requests.get('https://www.conversationstarters.com/wyrqlist.php').text
+      soup = bs4(r, 'html.parser')
+      qa = soup.find(id='qa').text
+      qor = soup.find(id='qor').text
+      qb = soup.find(id='qb').text
+      paradox = discord.Embed(description=f'{qa}\n{qor}\n{qb}', color = 16202876)
+      await ctx.send(embed=paradox)
 
-@commands.command()
-async def meme(self, ctx):
-    subreddit = reddit.subreddit("memes")
-    all_subs = []
-    top = subreddit.top(limit = 50)
-    for submission in top:
-        all_subs.append(submission)
-
-    random_sub = random.choice(all_subs)
-
-    name = random_sub.title
-    url = random_sub.url
-
-    em = discord.Embed(title = name)
-    em.set_image(url = url)
-    await ctx.send(embed = em)
+    @commands.command(name='dick', aliases=['dong', 'penis', 'pp'])
+    async def _dick(self, ctx, *, user: discord.Member = None):
+      if user is None:
+        user = ctx.author
+        size = random.randint(1, 15)
+        dong = ""
+        for _i in range(0, size):
+          dong += "="
+        paradox = discord.Embed(title=f"{user}'s Dick size", description=f"8{dong}D", colour=16202876)
+        await ctx.send(embed=paradox)
 
 @commands.command(name='8ball')
 async def _teball(ctx, *, question): #x2Fi
