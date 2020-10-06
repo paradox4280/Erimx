@@ -47,25 +47,5 @@ async def unmute(self, ctx, member: discord.Member=None):
     await member.remove_roles(role)
     await ctx.send(f"{member.mention} got unmuted")
 
-@commands.command()
-async def purge(self, ctx, amount: int): #!x2Fi
-    await ctx.message.delete()
-    async for message in ctx.message.channel.history(limit=amount):
-        try:
-           await message.delete()
-        except:
-            pass
-
-@commands.command()
-async def clear(self, ctx):
-    await ctx.message.delete()
-    await ctx.channel.purge()
-
-@commands.command()
-async def clearaut(self, ctx, amount: int):
-    for message in channel.history(limit=amount):
-        if message.author.id == ctx.author.id:
-            await message.delete()
-
 def setup(bot):
     bot.add_cog(moderation(bot))
